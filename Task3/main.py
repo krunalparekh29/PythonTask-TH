@@ -10,7 +10,7 @@ def user_data():
 
     return people
 
-def categorize_age_grps(people):
+def categorize_age_groups(people):
     age_groups={
         "18-35":[],
         "36-50":[],
@@ -30,16 +30,24 @@ def categorize_age_grps(people):
 
     return age_groups
 
-def maximum_person_group(age_groups):
-    return age_groups["66-90"]
+def maximum_minimum_person_in_each_group(age_groups):
+    result={}
+    for group, people in age_groups.items():
+        if people:
+            max_person = max(people, key=lambda x: x[1])
+            min_person = min(people, key=lambda x: x[1])
+            result[group] = {"maximum": max_person, "minimum": min_person}
+        else:
+            result[group] = {"max": None, "min": None}
+
+    return result
+
 
 def minimum_person_groups(age_groups):
     return age_groups["18-35"]
 
 
 user_data=user_data()
-age_segregation=categorize_age_grps(user_data)
-minimum_age_group=minimum_person_groups(age_segregation)
-print(minimum_age_group)
-maximum_age_group=maximum_person_group(age_segregation)
-print(maximum_age_group)
+age_segregation=categorize_age_groups(user_data)
+age_extremes = maximum_minimum_person_in_each_group(age_segregation)
+print(age_extremes)
